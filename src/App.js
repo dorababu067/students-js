@@ -8,6 +8,9 @@ import NavBar from "./components/NavBar";
 import PrivateRoute from "./components/PrivateRoute";
 import { Container } from "react-bootstrap";
 import AuthContextProvider from "./context/authContext";
+import CreateSchool from "./components/school/CreateSchool";
+import Schools from "./components/school/Schools";
+import SchoolDetails from "./components/school/SchoolDetails";
 
 function App() {
   return (
@@ -29,6 +32,17 @@ function App() {
                 exact
                 path="/update/students/:id"
                 component={UpdateStudent}
+              />
+              <PrivateRoute
+                exact
+                path="/create/schools/"
+                component={CreateSchool}
+              />
+              <PrivateRoute exact path="/schools/" component={Schools} />
+              <PrivateRoute
+                exact
+                path="/schools/:id/"
+                component={SchoolDetails}
               />
             </Switch>
           </Container>

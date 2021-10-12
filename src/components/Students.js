@@ -10,7 +10,7 @@ function Students() {
   const [students, setStudents] = useState([]);
 
   const getStudents = async () => {
-    const response = await axios.get("/students/");
+    const response = await axios.get("/schools/1/students/");
     setStudents(response.data);
   };
 

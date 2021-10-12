@@ -1,23 +1,29 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "./axios";
 import Dashboard from "./Dashboard";
+import student from "../services/student";
 
 function AddStudent() {
   const history = useHistory();
-  const [state, setState] = useState({ name: "", age: "", address: "" });
+  const [state, setState] = useState({
+    name: "",
+    age: "",
+    address: "",
+    school: 1,
+  });
   const [error, setError] = useState({});
 
   function onchangeHandler(e) {
-    setState((state) => ({ ...state, [e.target.name]: e.target.value }));
+    setState((preState) => ({ ...preState, [e.target.name]: e.target.value }));
   }
+
   const saveStudents = async () => {
     try {
-      const data = state;
-      const response = await axios.post("/students/", data);
+      await student.create(null);
       history.push("/students/");
     } catch (error) {
-      setError(error.response.data);
+      console.log(error);
+      setError(error);
     }
   };
 
@@ -28,8 +34,6 @@ function AddStudent() {
   }
   return (
     <Dashboard>
-      {console.log(error)}
-      {console.log(Object.values(error).length)}
       <h4>Add New Student</h4>
       <hr></hr>
       <form onSubmit={onsubmitHandler}>

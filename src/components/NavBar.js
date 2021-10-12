@@ -7,10 +7,16 @@ function NavBar() {
   const auth = useContext(AuthContext);
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      bg="primary"
+      variant="dark"
+      sticky="top"
+    >
       <Container>
         <Navbar.Brand as={Link} to="/">
-          React-Bootstrap
+          School Management
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
