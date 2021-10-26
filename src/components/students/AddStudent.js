@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import Dashboard from "./Dashboard";
-import student from "../services/student";
+import { useParams } from "react-router-dom";
+import student from "../../services/student";
 
 function AddStudent() {
   const history = useHistory();
+  const { id } = useParams();
   const [state, setState] = useState({
     name: "",
     age: "",
     address: "",
-    school: 1,
+    school: id,
   });
   const [error, setError] = useState({});
 
@@ -19,8 +20,9 @@ function AddStudent() {
 
   const saveStudents = async () => {
     try {
-      await student.create(null);
-      history.push("/students/");
+      console.log(state);
+      await student.create(id, state);
+      history.push(`/schools/${id}`);
     } catch (error) {
       console.log(error);
       setError(error);
@@ -33,7 +35,7 @@ function AddStudent() {
     saveStudents();
   }
   return (
-    <Dashboard>
+    <>
       <h4>Add New Student</h4>
       <hr></hr>
       <form onSubmit={onsubmitHandler}>
@@ -87,7 +89,7 @@ function AddStudent() {
           value="Save Student"
         ></input>
       </form>
-    </Dashboard>
+    </>
   );
 }
 

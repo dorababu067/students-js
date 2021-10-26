@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "react-bootstrap";
 import school from "../../services/school";
 import studentService from "../../services/student";
 import { useParams } from "react-router-dom";
 import DataTable from "react-data-table-component";
+import { useHistory } from "react-router-dom";
+import { Plus } from "@styled-icons/fa-solid/Plus";
+import { Button } from "react-bootstrap";
 
 function SchoolDetails() {
   const { id } = useParams();
+  const history = useHistory();
   const [singleSchool, setSingleSchool] = useState({});
   const [students, setStudents] = useState([]);
 
@@ -23,6 +26,9 @@ function SchoolDetails() {
     getSchool();
     getSchoolStudents();
   }, []);
+  const rowClickedHandler = (row) => {
+    history.push(`/schools/${id}/students/${row.id}/`);
+  };
 
   //students data
   const columns = [
@@ -56,24 +62,33 @@ function SchoolDetails() {
   return (
     <>
       {singleSchool && (
-        <Card style={{ width: "18rem", marginBottom: "10px" }}>
-          <Card.Img
-            variant="top"
-            src="https://source.unsplash.com/300x150/?school"
-          />
-          <Card.Body>
-            <Card.Title>{singleSchool.name} Details</Card.Title>
+        <div className="d-flex">
+          <div className="me-5">
+            <img src="https://source.unsplash.com/500x300/?school" />
+          </div>
+          <div>
+            <h2>{singleSchool.name} Details</h2>
             <p>Name : {singleSchool.name}</p>
             <p>Address :{singleSchool.address}</p>
-          </Card.Body>
-        </Card>
+          </div>
+        </div>
       )}
-
+      <Button
+        variant="primary"
+        className="d-flex align-items-center ms-auto mb-2"
+        onClick={() => {
+          history.push(`/add/schools/${singleSchool.id}/students`);
+        }}
+      >
+        <Plus size={20} style={{ marginRight: "10px" }} /> Students
+      </Button>
       {students && students.length > 0 && (
         <DataTable
           title="Students Details"
           columns={columns}
           data={students}
+          highlightOnHover={true}
+          onRowClicked={rowClickedHandler}
           pagination
         />
       )}

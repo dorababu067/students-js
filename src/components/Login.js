@@ -27,7 +27,7 @@ function Login() {
   const onsubmitHandler = async (data) => {
     // API call save the student data
     await auth.login(data);
-    history.push("/students");
+    history.push("/schools");
   };
 
   return (

@@ -60,7 +60,7 @@ function Schools() {
           history.push("/create/schools/");
         }}
       >
-        <Plus size={20} style={{ marginRight: "10px" }} /> School
+        <Plus size={20} className="me-2" /> School
       </Button>
       <Table striped bordered hover>
         <thead>
@@ -78,7 +78,9 @@ function Schools() {
               return (
                 <tr key={school.id}>
                   <td>{school.id}</td>
-                  <td>{school.name}</td>
+                  <td onClick={() => history.push(`/schools/${school.id}`)}>
+                    {school.name}
+                  </td>
                   <td>{school.address}</td>
                   <td>
                     <Edit
@@ -98,7 +100,7 @@ function Schools() {
         </tbody>
       </Table>
       {getSchool && (
-        <Modal show={show} onHide={handleClose} centered>
+        <Modal show={show} centered>
           <Form onSubmit={formik.handleSubmit}>
             <Modal.Header>
               <Modal.Title>Update {getSchool.name}</Modal.Title>

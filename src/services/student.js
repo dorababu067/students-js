@@ -1,9 +1,12 @@
 import axios from "../components/axios";
 
 class StudentService {
-  async create(payload) {
+  async create(schoolId, payload) {
     try {
-      const response = await axios.post("/schools/", payload);
+      const response = await axios.post(
+        `/schools/${schoolId}/students/`,
+        payload
+      );
       return response;
     } catch (error) {
       throw error.response.data;
@@ -18,13 +21,38 @@ class StudentService {
       throw error.response.data;
     }
   }
-
-  async update() {
-    return "update school";
+  async retrieve(schoolId, studentId) {
+    try {
+      const response = await axios.get(
+        `/schools/${schoolId}/students/${studentId}/`
+      );
+      return response;
+    } catch (error) {
+      throw error.response.data;
+    }
   }
 
-  async delete() {
-    return "delete school";
+  async update(schoolId, studentId, payload) {
+    try {
+      const response = await axios.put(
+        `/schools/${schoolId}/students/${studentId}/`,
+        payload
+      );
+      return response;
+    } catch (error) {
+      throw error.response.data;
+    }
+  }
+
+  async delete(schoolId, studentId) {
+    try {
+      const response = await axios.delete(
+        `/schools/${schoolId}/students/${studentId}/`
+      );
+      return response;
+    } catch (error) {
+      throw error.response.data;
+    }
   }
 }
 

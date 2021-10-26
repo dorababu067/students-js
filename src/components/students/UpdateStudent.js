@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import axios from "./axios";
-import Dashboard from "./Dashboard";
+import student from "../../services/student";
 
 function UpdateStudent(props) {
-  const { id } = useParams();
+  const { schoolId, studentId } = useParams();
   const history = useHistory();
-  const [student, setStudent] = useState();
+  const [singleStudent, setStudent] = useState();
 
   // API Call for Update data
   const submitHandler = async (e) => {
     e.preventDefault();
-    await axios.put(`/students/${id}/`, student);
-    history.push("/students/");
+    const response = await student.update(schoolId, studentId, singleStudent);
+    history.push(`/schools/${schoolId}/students/${studentId}`);
   };
 
   function onchangeHandler(e) {
@@ -22,7 +21,7 @@ function UpdateStudent(props) {
 
   // API call for get the student details
   const getStudent = async () => {
-    const response = await axios.get(`/students/${id}`);
+    const response = await student.retrieve(schoolId, studentId);
     setStudent(response.data);
   };
 
@@ -31,7 +30,7 @@ function UpdateStudent(props) {
     getStudent();
   }, []);
   return (
-    <Dashboard>
+    <>
       <h4>Update Student Details</h4>
       <hr></hr>
       <form onSubmit={submitHandler}>
@@ -45,8 +44,8 @@ function UpdateStudent(props) {
             placeholder="Student name"
             name="name"
             onChange={onchangeHandler}
-            value={student?.name}
-            defaultValue={student?.name}
+            value={singleStudent?.name}
+            defaultValue={singleStudent?.name}
           />
         </div>
         <div className="form-group">
@@ -59,8 +58,8 @@ function UpdateStudent(props) {
             placeholder="Student age"
             name="age"
             onChange={onchangeHandler}
-            value={student?.age}
-            defaultValue={student?.age}
+            value={singleStudent?.age}
+            defaultValue={singleStudent?.age}
           />
         </div>
         <div className="form-group">
@@ -73,8 +72,8 @@ function UpdateStudent(props) {
             placeholder="Student address"
             name="address"
             onChange={onchangeHandler}
-            value={student?.address}
-            defaultValue={student?.address}
+            value={singleStudent?.address}
+            defaultValue={singleStudent?.address}
           />
         </div>
         <br></br>
@@ -84,7 +83,7 @@ function UpdateStudent(props) {
           value="Update Student"
         ></input>
       </form>
-    </Dashboard>
+    </>
   );
 }
 export default UpdateStudent;
